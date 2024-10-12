@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    let nextId = 6; // Startet bei 3, da es schon 2 Einträge gibt
+    let nextId = 3; // Startet bei 3, da es schon 2 Einträge gibt
 
     $('#speichernBtn').click(function(){
         // Eingabewerte aus dem Formular lesen
