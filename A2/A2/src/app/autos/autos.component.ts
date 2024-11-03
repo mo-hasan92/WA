@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-autos',
-  standalone: true,
-  imports: [],
-  templateUrl: './autos.component.html',
-  styleUrl: './autos.component.css'
+  selector: 'app-Autos',
+  templateUrl: './Autos.component.html',
+  styleUrls: ['./Autos.component.css']
 })
-export class AutosComponent {
+export class AutosComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
 
 }
