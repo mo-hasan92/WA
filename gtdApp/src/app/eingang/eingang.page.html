@@ -1,0 +1,79 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Eingang</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openModal(null)">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Liste der Aufgaben -->
+  <ion-list>
+    <ion-item *ngFor="let task of tasks; let i = index">
+      <ion-label>
+        <h2>{{ task.title }}</h2>
+        <p>{{ task.description }}</p>
+        <p *ngIf="task.dueDate">Fällig am: {{ task.dueDate | date:'dd.MM.yyyy' }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="openModal(i)">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="deleteTask(i)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+  <!-- Modal für Task-Erstellung und -Bearbeitung -->
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{ modalTitle }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="floating">Titel</ion-label>
+          <ion-input [(ngModel)]="taskTitle"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Priority:</ion-label>
+          <ion-select interface="popover" [(ngModel)]="priority">
+            <ion-select-option value="low">Low</ion-select-option>
+            <ion-select-option value="medium">Medium</ion-select-option>
+            <ion-select-option value="high">High</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Beschreibung (optional)</ion-label>
+          <ion-textarea [(ngModel)]="taskDescription"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label>Due Date:</ion-label>
+          <ion-datetime presentation="date"
+            display-format="DD.MM.YYYY"
+            [(ngModel)]="dueDate"
+            done-text="OK"
+            cancel-text="Cancel">
+          </ion-datetime>
+        </ion-item>
+
+        <ion-button expand="block" (click)="saveTask()">
+          {{ isEditing ? 'Save Task' : 'Add Task' }}
+        </ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+
