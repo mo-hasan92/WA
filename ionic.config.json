@@ -1,7 +1,0 @@
-{
-  "name": "gtdApp",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
