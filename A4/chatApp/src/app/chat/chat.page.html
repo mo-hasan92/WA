@@ -5,9 +5,26 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-list>
+    <ion-item *ngFor="let message of messages">
+      <ion-label>
+        <h3>{{ message.author }}</h3>
+        <p>{{ message.text }}</p>
+
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <ion-label position="floating">Neue Nachricht</ion-label> <br>
+    <ion-input [(ngModel)]="newMessage" placeholder="Schreib etwas..." type="text"></ion-input>
+  </ion-item>
+
+  <!-- Button zum Senden der Nachricht -->
+  <ion-footer>
     <ion-toolbar>
-      <ion-title size="large">Chat</ion-title>
+      <ion-button expand="full" (click)="sendMessage()">Senden</ion-button>
     </ion-toolbar>
-  </ion-header>
+  </ion-footer>
+
 </ion-content>
