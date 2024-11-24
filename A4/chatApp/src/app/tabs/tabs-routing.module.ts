@@ -9,26 +9,22 @@ const routes: Routes = [
     children: [
       {
         path: 'chat',
-        loadChildren: () => import('../chat/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../chat/chat.module').then(m => m.ChatPageModule)
       },
       {
         path: 'einstellung',
-        loadChildren: () => import('../einstellung/tab2.module').then(m => m.Tab2PageModule)
-      },
-      {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        loadChildren: () => import('../einstellung/einstellung.module').then(m => m.EinstellungPageModule)
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/chat',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/chat',
     pathMatch: 'full'
   }
 ];
