@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collectionData, collection, query, orderBy } from '@angular/fire/firestore';
-import { addDoc, serverTimestamp } from 'firebase/firestore';
+import { addDoc, getDocs, serverTimestamp } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 
 // Interface für eine Nachricht in Firestore
@@ -42,28 +42,24 @@ export class FirestoreService {
 
   // Liste der Autoren abrufen (eindeutige Autoren)
   async getAuthors(): Promise<string[]> {
-    const messagesCollection = collection(this.firestore, 'room_1');
-
     try {
-      // Abrufen der Nachrichten
-      const messages = await collectionData(messagesCollection, { idField: 'id' }).toPromise();
+      // Collection "room_1" abrufen
+      const messagesCollection = collection(this.firestore, 'room_1');
 
-      // Sicherstellen, dass `messages` nicht `undefined` ist
-      if (!messages) {
-        return []; // Wenn keine Daten vorliegen, geben wir eine leere Liste zurück
-      }
+      // Dokumente aus der Collection abrufen
+      const snapshot = await getDocs(messagesCollection);
 
-      // Nachrichten filtern und Autoren extrahieren
-      const authors = messages
-        .filter((message: any): message is Message => typeof message.author === 'string') // Typprüfung
-        .map((message: Message) => message.author); // Nur Autoren extrahieren
+      // Nachrichten mappen und Autoren extrahieren
+      const authors: string[] = snapshot.docs
+        .map((doc) => doc.data() as Message) // Typisierung der Daten als `Message`
+        .filter((message) => message.author && typeof message.author === 'string') // Sicherstellen, dass `author` existiert
+        .map((message) => message.author);
 
       // Duplikate entfernen und zurückgeben
       return [...new Set(authors)];
     } catch (error) {
       console.error('Fehler beim Abrufen der Autoren:', error);
-      return []; // Fehlerfall: leere Liste zurückgeben
+      return [];
     }
   }
-
 }
