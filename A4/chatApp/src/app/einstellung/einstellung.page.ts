@@ -8,17 +8,13 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./einstellung.page.scss'],
 })
 
-export class EinstellungPage implements OnInit {
+export class EinstellungPage {
 
   username: string = ''; // Vom Nutzer eingegebener Name
   errorMessage: string = ''; // Fehlermeldung
   successMessage: string = ''; // Erfolgsmeldung
 
   constructor(private firestoreService: FirestoreService, private alertCtrl: AlertController) { }
-
-  ngOnInit() {
-
-  }
 
   async saveUsername() {
 
